@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="moblie" placeholder="请输入手机号"> <input type="button" value="点击获取验证码" id="btn">
+    <script>
+        function $(id) {
+            return document.getElementById(id)
+        }
+
+        $("btn").onclick = function() {
+            let sCount = 3;
+            this.value = sCount + "s后重新获取"
+            this.disabled = true
+            let timeId = setInterval(function() {
+                sCount--
+                $("btn").value = sCount + "s后重新获取"
+                if (sCount == 0) {
+                    clearInterval(timeId)
+                    $("btn").disabled = false
+                    $("btn").value = "点击获取验证码"
+                }
+            }, 1000)
+        }
+    </script>
+</body>
+
+</html>

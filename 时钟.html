@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+
+    <!-- 
+        流程：
+            1.获取当前的时分秒
+                    getHours();   获得时
+                    getMinutes(); 获得分
+                    getSeconds(); 获得秒
+
+            2.根据算法计算出它们各自要的度数
+
+            3.分钟要 加上 秒 已经走完的度数
+            4.时钟要 加上 分 已经走完的度数
+            
+            5.赋值给时分秒div，让他们旋转
+
+            6.因为需要时钟自己动，所以把代码写在计时器里
+
+            7.因为页面一打开就需要立刻计算一次，所以把代码封装成函数，默认调用一次和计时器里也调用一次
+
+     -->
+
+
+    <style>
+        .clock {
+            width: 600px;
+            height: 600px;
+            margin: 100px auto;
+            background: url(images/clock.jpg) no-repeat;
+            position: relative;
+        }
+        
+        .clock div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url(images/hour.png) no-repeat center;
+        }
+        
+        #m {
+            background-image: url(images/minute.png);
+        }
+        
+        #s {
+            background-image: url(images/second.png);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="clock">
+        <div id="h"></div>
+        <div id="m"></div>
+        <div id="s"></div>
+    </div>
+
+    <script>
+        function $(id) {
+            return document.getElementById(id)
+        }
+        let hDiv = $("h")
+        let mDiv = $("m")
+        let sDiv = $("s")
+
+        setNow()
+
+        // 开启定时
+        setInterval(setNow, 1)
+
+        function setNow() {
+            let date = new Date()
+                // h*30 + m/60*30
+            let h = date.getHours()
+                // m*60 + s/60*6
+            let m = date.getMinutes()
+                // s*6 + ms/1000*6
+            let s = date.getSeconds()
+                // ms/1000
+            let ms = date.getMilliseconds()
+
+            let hdeg = h * 30 + m / 60 * 30
+            let mdeg = m * 6 + s / 60 * 6
+            let sdeg = s * 6 + ms / 1000 * 6
+
+            setDeg(hDiv, hdeg)
+            setDeg(mDiv, mdeg)
+            setDeg(sDiv, sdeg)
+        }
+
+        // 为元素设置度数
+        function setDeg(el, degNumber) {
+            el.style.transform = `rotate(${degNumber}deg)`
+        }
+    </script>
+</body>
+
+</html>
